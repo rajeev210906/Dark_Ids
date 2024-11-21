@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaging System</title>
+    <link rel="stylesheet" href="../static/css/message_inbox_style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Messages</h1>
+        </header>
+        <div class="message-list">
+            {% for msg in messages %}
+            <div class="message-box" onclick="openMessage('{{ msg.sender_name }}', '{{ msg.phone_email }}', '{{ msg.message }}')">
+                <div class="message-header">
+                    <p class="sender-name">{{ msg.sender_name }}</p>
+                    <div class="phone-box">{{ msg.phone_email }}</div>
+                    <form action="/message_delete" method="post">
+                        <div>
+                            <input type="hidden" name="del_btn" value="yes">
+                            <input type="hidden" name="m_id" value="{{ msg.m_id }}">
+                            <input type="hidden" name="uid" value="{{ msg.uid }}">
+                            <button type="submit" class="phone-box">X</button>
+                        </div>
+                    </form>
+                </div>
+                <p class="short-message">{{ msg.message }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Full Message Card -->
+        <div class="full-message" id="messageCard">
+            <div class="message-content">
+                <p class="sender-name" id="cardSenderName"></p>
+                <p class="phone-box" id="cardPhoneEmail"></p>
+                <p id="cardMessage"></p>
+                <button class="reply-btn" onclick="openReplyPopup()">Reply</button>
+                <button class="close-btn" onclick="closeMessage()">Close</button>
+            </div>
+        </div>
+
+        <!-- Reply Popup -->
+        <div class="reply-popup" id="replyPopup">
+            <div class="popup-content">
+                <textarea placeholder="Type your reply..." id="replyMessage"></textarea>
+                <button class="send-btn" onclick="sendReply()">Send</button>
+                <button class="close-btn" onclick="closeReplyPopup()">Close</button>
+            </div>
+        </div>
+
+        <!-- Green Floating Button Popup -->
+        <div class="send-message-popup" id="sendMessagePopup">
+            <div class="popup-content">
+                <h2>Send Message</h2>
+                <input type="text" placeholder="Phone Number" id="phoneNumber">
+                <textarea placeholder="Write your message here..." id="messageText"></textarea>
+                <button class="send-btn" onclick="sendMessage()">Send</button>
+                <button class="close-btn" onclick="closeSendMessagePopup()">Close</button>
+            </div>
+        </div>
+
+        <!-- Red Floating Button Popup for All Users -->
+        <div class="all-users-popup" id="allUsersPopup">
+            <div class="popup-content">
+                <h2>All Users</h2>
+                <div class="user-list">
+                    {% for user in users %}
+                    <div class="user-box">
+                        <p class="user-name">{{ user.full_name }}</p>
+                        <p class="user-phone">{{ user.user_phone }}</p>
+                        <button class="send-btn" onclick="openUserMessagePopup('{{ user.user_phone }}','{{uid}}')">Send</button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="close-btn" onclick="closeAllUsersPopup()">Close</button>
+            </div>
+        </div>
+
+        <!-- User Message Popup -->
+        <div class="user-message-popup" id="userMessagePopup">
+            <div class="popup-content">
+                <form action="/sent_message" method="post">
+                    <input type="text" name="sent_text" placeholder="Write your message here..." id="userMessageText"></textarea>
+                    <input type="hidden" name="phone" id="reciever_phone">
+                    <input type="hidden" name="s_uid" id="sender_uid">
+                    <button type="submit" class="send-btn">Send</button>
+                    <button class="close-btn" onclick="closeUserMessagePopup()">Close</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Floating Buttons -->
+        <button class="floating-button red" onclick="openAllUsersPopup()">Red</button>
+        <button class="floating-button green" onclick="openSendMessagePopup()">Grn</button>
+        <button class="floating-button green" style="margin-right: 20%;" onclick="do_reload()">Rld</button>
+    </div>
+
+    <script>
+        // Function to open the message card
+function openMessage(sender, phoneEmail, message) {
+    document.getElementById('cardSenderName').textContent = sender;
+    document.getElementById('cardPhoneEmail').textContent = phoneEmail;
+    document.getElementById('cardMessage').textContent = message;
+    document.getElementById('messageCard').style.display = 'block';
+}
+
+// Function to close the message card
+function closeMessage() {
+    document.getElementById('messageCard').style.display = 'none';
+}
+
+// Function to open the reply popup
+function openReplyPopup() {
+    document.getElementById('replyPopup').style.display = 'block';
+}
+
+// Function to close the reply popup
+function closeReplyPopup() {
+    document.getElementById('replyPopup').style.display = 'none';
+}
+
+// Function to send the reply
+function sendReply() {
+    const replyMessage = document.getElementById('replyMessage').value;
+    if (replyMessage) {
+        alert('Reply sent: ' + replyMessage);  // Placeholder for backend integration
+        document.getElementById('replyMessage').value = '';  // Clear the input
+        closeReplyPopup();  // Close the popup
+    }
+}
+
+//Reload
+function do_reload(){
+    location.reload();  // This will reload the current page
+}
+
+
+// Green Button Popup
+function openSendMessagePopup() {
+    document.getElementById('sendMessagePopup').style.display = 'block';
+}
+
+function closeSendMessagePopup() {
+    document.getElementById('sendMessagePopup').style.display = 'none';
+}
+
+function sendMessage() {
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    const messageText = document.getElementById('messageText').value;
+    alert(`Message sent to ${phoneNumber}: ${messageText}`);
+    closeSendMessagePopup();
+}
+
+// Red Button Popup - All Users
+function openAllUsersPopup() {
+    document.getElementById('allUsersPopup').style.display = 'block';
+}
+
+function closeAllUsersPopup() {
+    document.getElementById('allUsersPopup').style.display = 'none';
+}
+
+// User Message Popup
+function openUserMessagePopup(phone,uid) {
+    document.getElementById('reciever_phone').value = phone;
+    document.getElementById('userMessagePopup').style.display = 'block';
+    document.getElementById('reciever_phone').value = phone;
+    document.getElementById('sender_uid').value = uid;
+}
+
+function closeUserMessagePopup() {
+    document.getElementById('userMessagePopup').style.display = 'none';
+}
+
+function sendUserMessage() {
+    const phone = document.getElementById('userMessagePopup').dataset.phone;
+    const userMessageText = document.getElementById('userMessageText').value;
+    // Send POST request using fetch API without await
+    fetch('/sent_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ phone, userMessageText })  // Send data as JSON
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();  // Parse JSON data from response
+                } else {
+                    throw new Error('Failed to submit form');
+                }
+            })
+            .then(data => {
+                alert('Form submitted successfully!');
+                console.log(data);  // Response data from server
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message);
+            });
+    closeUserMessagePopup();
+}
+
+    </script>
+</body>
+</html>

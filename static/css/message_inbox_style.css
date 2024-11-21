@@ -1,0 +1,278 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+}
+
+header {
+    background-color: #0f0f0f;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.8);
+}
+
+h1 {
+    font-size: 26px;
+    color: #00ffff;
+    text-shadow: 0px 0px 5px #00ffff, 0px 0px 10px #00ffff;
+}
+
+.message-list {
+    margin-top: 20px;
+}
+
+.message-box {
+    background-color: #1b1b1b;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.4);
+    transition: all 0.3s ease;
+    color: #ffffff;
+}
+
+.message-box::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #00ffff, #0099ff, #00ffff);
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    opacity: 0.6;
+}
+
+.message-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.8);
+}
+
+.message-box:hover::before {
+    opacity: 1;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sender-name {
+    font-weight: bold;
+    font-size: 14px; /* Chhota font size */
+    color: #00ffff;
+    text-shadow: 0px 0px 3px #00ffff;
+}
+
+.phone-box {
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px; /* Font size for PHONE */
+    box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.4);
+}
+
+.short-message {
+    font-size: 14px;
+    color: #bbb;
+    margin-top: 8px;
+}
+
+.full-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1f1f1f;
+    padding: 25px;
+    box-shadow: 0px 0px 25px rgba(0, 255, 255, 0.6);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: left;
+    z-index: 10;
+}
+
+.close-btn {
+    background-color: #00ffff;
+    border: none;
+    color: #1f1f1f;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: #00cccc;
+}
+
+.close-btn:active {
+    background-color: #009999;
+}
+
+/* Additional styles for the message system */
+
+.message-list {
+    border: 2px solid #00ffff;
+    padding: 10px;
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+/* Full Message Card */
+.full-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 25px rgba(0, 255, 255, 0.6);
+    width: 90%;
+    max-width: 400px;
+    z-index: 10;
+    text-align: center;
+}
+
+.reply-btn {
+    background-color: #00ffff;
+    color: #1f1f1f;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Reply Popup */
+.reply-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1f1f1f;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 25px rgba(0, 255, 255, 0.6);
+    width: 90%;
+    max-width: 400px;
+    z-index: 20;
+    text-align: center;
+}
+
+.reply-popup textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 10px;
+    resize: none;
+    font-size: 16px;
+}
+
+.send-btn {
+    background-color: #00ffff;
+    color: #1f1f1f;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+
+/* Floating Buttons */
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+}
+
+.floating-button.red {
+    background-color: red;
+    margin-bottom: 20%;
+}
+
+.floating-button.green {
+    background-color: green;
+}
+
+/* Popups */
+.send-message-popup, .all-users-popup, .user-message-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1f1f1f;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 25px rgba(0, 255, 255, 0.6);
+    width: 90%;
+    max-width: 400px;
+    z-index: 20;
+    text-align: center;
+}
+
+.send-message-popup input, .send-message-popup textarea,
+.user-message-popup textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.all-users-popup .user-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.user-box {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

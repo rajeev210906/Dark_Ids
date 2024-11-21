@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Account</title>
+    <style>
+        /* Basic Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #1a1a1a;
+            color: #eee;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #222;
+            padding: 10px 20px;
+        }
+
+        .navbar h1 {
+            color: #00aaff; /* Sky Blue Color */
+            text-align: center;
+            flex: 1;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #00aaff; /* Sky Blue Color */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #0099cc; /* Change color on hover */
+        }
+
+        /* Card Container */
+        .card-container {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 500px; /* Adjusted width for better fit */
+            margin-top: 20px; /* Margin between header and card */
+        }
+
+        /* Card Styling */
+        .card {
+            width: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* Front and Back Face */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            background-color: #222;
+            padding: 30px 20px;
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
+        }
+
+        .card-face.front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .card-face.back {
+            transform: rotateY(180deg);
+        }
+
+        /* Shared Form Styling */
+        h2 {
+            text-align: center;
+            color: #00aaff; /* Sky Blue Color */
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            color: #00aaff; /* Sky Blue Color */
+            font-weight: 500;
+            margin-right: 10px;
+            flex: 0 0 40%; /* Adjust width for desktop */
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #333;
+            background-color: #111;
+            color: #eee;
+            border-radius: 6px;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        /* Neon Border on Focus */
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00aaff;
+            box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
+        }
+
+        /* Button Styling */
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00aaff; /* Sky Blue Color */
+            border: none;
+            border-radius: 6px;
+            color: #111;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #0099cc;
+            box-shadow: 0 0 10px #00aaff;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Hide navigation links on mobile */
+            }
+            .form-group {
+                flex-direction: column; /* Stack label and input */
+            }
+            .form-group label {
+                margin-right: 0; /* Remove margin for mobile */
+                margin-bottom: 6px; /* Space between label and input */
+                flex: none; /* Reset flex for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <h1>DARK ID'S</h1>
+    <div class="nav-links">
+        <a href="#">Developer</a>
+        <a href="#">Contributor</a>
+        <a href="#">Empty1</a>
+        <a href="#">Empty2</a>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card" id="card">
+        <!-- Front Face: Username and Password Form -->
+        <div class="card-face front">
+            <h2>Create New Account</h2>
+            <form id="loginForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="username"> Create Username*:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"> Create Password*:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="validateAndFlipCard()">Continue</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Back Face: Create Account Form -->
+        <div class="card-face back">
+            <h2>Enter Additional Details</h2>
+            <form id="accountForm" action="/submit_signup" method="post" onsubmit="return validateAccountForm();">
+                <input type="hidden" id="hiddenUsername" name="username">
+                <input type="hidden" id="hiddenPassword" name="password">
+                
+                <div class="form-group">
+                    <label for="full_name">Full Name:</label>
+                    <input type="text" id="full_name" name="full_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date Of Birth:</label>
+                    <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fathers_name">Father's Name:</label>
+                    <input type="text" id="fathers_name" name="fathers_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="1" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="pin_code">Pin Code:</label>
+                    <input type="text" id="pin_code" name="pin_code" pattern="\d{6}" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Create Account</button>
+                </div>
+                <!-- Button Group -->
+                <div class="form-group">
+                    <button type="button" onclick="window.location.href='/login';">Login (Already Have Account)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to validate front form and flip the card
+    function validateAndFlipCard() {
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+
+        if (username.value && password.value) {
+            document.getElementById('hiddenUsername').value = username.value;
+            document.getElementById('hiddenPassword').value = password.value;
+            document.getElementById('card').classList.add('flipped');
+        } else {
+            alert("Please fill out both Username and Password fields.");
+        }
+    }
+
+    // Function to validate the back form before submitting
+    function validateAccountForm() {
+        const accountForm = document.getElementById('accountForm');
+        if (accountForm.checkValidity()) {
+            return true;
+        } else {
+            alert("Please fill out all required fields.");
+            return false;
+        }
+    }
+</script>
+
+</body>
+</html>

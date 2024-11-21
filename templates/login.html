@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Basic Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            display: flex;
+            flex-direction: column; /* Stack nav and content */
+            height: 100vh;
+            background-color: #1a1a1a;
+            color: #eee;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between; /* Space between items */
+            align-items: center; /* Center vertically */
+            background-color: #222;
+            padding: 10px 20px;
+        }
+
+        .navbar h1 {
+            color: #00aaff; /* Sky Blue Color */
+            text-align: center; /* Center title */
+            flex: 1; /* Allow title to take up available space */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px; /* Space between links */
+        }
+
+        .nav-links a {
+            color: #00aaff; /* Sky Blue Color */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #0099cc; /* Change color on hover */
+        }
+
+        /* Card Container */
+        .card-container {
+            width: 100%;
+            max-width: 400px; /* Adjusted width for better fit */
+            background-color: #222;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            text-align: center;
+            margin: 20px auto; /* Center card */
+            margin-top: 20px; /* Margin between header and card */
+        }
+
+        /* Heading */
+        h2 {
+            color: #00aaff; /* Sky Blue Color */
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 15px;
+            display: flex; /* Align label and input on the same line */
+            align-items: center;
+        }
+
+        .form-group label {
+            color: #00aaff; /* Sky Blue Color */
+            font-weight: 500;
+            margin-right: 10px; /* Space between label and input */
+            flex: 0 0 30%; /* Adjust width for desktop */
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #333;
+            background-color: #111;
+            color: #eee;
+            border-radius: 6px;
+            transition: all 0.3s;
+            flex: 1; /* Allow input to take remaining space */
+        }
+
+        /* Neon Border on Focus */
+        .form-group input:focus {
+            outline: none;
+            border-color: #00aaff;
+            box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
+        }
+
+        /* Button Styling */
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00aaff; /* Sky Blue Color */
+            border: none;
+            border-radius: 6px;
+            color: #111;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #0099cc;
+            box-shadow: 0 0 10px #00aaff;
+        }
+
+        /* Additional Button Group */
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .button-group button {
+            width: 48%; /* Slightly less than half to fit two buttons */
+            padding: 12px;
+            background-color: #00aaff; /* Sky Blue Color */
+            border: none;
+            border-radius: 6px;
+            color: #111;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-group button:hover {
+            background-color: #0099cc;
+            box-shadow: 0 0 10px #00aaff;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Hide navigation links on mobile */
+            }
+            .form-group {
+                flex-direction: column; /* Stack label and input */
+            }
+            .form-group label {
+                margin-right: 0; /* Remove margin for mobile */
+                margin-bottom: 6px; /* Space between label and input */
+                flex: none; /* Reset flex for mobile */
+            }
+            .button-group {
+                flex-direction: column; /* Stack buttons on mobile */
+            }
+            .button-group button {
+                width: 100%; /* Full width for mobile */
+                margin-bottom: 10px; /* Space between buttons */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <h1>DARK ID'S</h1>
+    <div class="nav-links">
+        <a href="#">Developer</a>
+        <a href="#">Contributor</a>
+        <a href="#">Empty1</a>
+        <a href="#">Empty2</a>
+    </div>
+</div>
+
+<!-- Card Container for Login -->
+<div class="card-container">
+    <h2>Login</h2>
+    <form action="/submit_login" method="post">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Login</button>
+        </div>
+        <div class="button-group">
+            <button type="button" onclick="window.location.href='/signup';">Sign Up</button>
+            <button type="reset">Reset</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
