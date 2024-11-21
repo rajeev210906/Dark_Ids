@@ -188,5 +188,5 @@ def handle_data():
         return f"Something went Wrong....Please Go Back And Try Again Later...."
 
 
-if __name__=='__main__':
-    app.run(debug=True,port=5200)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
